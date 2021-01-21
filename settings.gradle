@@ -1,0 +1,6 @@
+include ':commonmodule'
+include ':basemodule'
+include ':commonlibrary'
+include ':commonnetwork'
+include ':app'
+rootProject.name = "My Application"
