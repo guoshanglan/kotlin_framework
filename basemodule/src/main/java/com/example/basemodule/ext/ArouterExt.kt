@@ -1,10 +1,8 @@
-package com.eaglesoul.basemodule.ext
+package com.example.basemodule.ext
 
-import android.app.Activity
-import android.os.Bundle
 import com.alibaba.android.arouter.launcher.ARouter
 
-import com.example.commonmodule.JumpUtils
+import com.example.commonmodule.utils.JumpUtils
 
 /**
  * @Description:    路由跳转

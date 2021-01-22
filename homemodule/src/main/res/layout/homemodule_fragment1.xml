@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+        <variable
+            name="fragment1"
+            type="com.example.homemodule.viewmodel.Fragment1ViewModel" />
+        
+    </data>
+    
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#4a5b"
+            android:gravity="center"
+            android:text="@{fragment1.fragmentName}" />
+
+    </LinearLayout>
+
+</layout>
+

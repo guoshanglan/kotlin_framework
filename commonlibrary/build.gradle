@@ -59,6 +59,9 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+    //腾讯MMKV,用于数据存储（https://github.com/Tencent/MMKV）
+    api 'com.tencent:mmkv-static:1.1.1'
+    api "androidx.viewpager2:viewpager2:1.0.0"
 
 
 }

@@ -1,3 +1,4 @@
+include ':homemodule'
 include ':commonmodule'
 include ':basemodule'
 include ':commonlibrary'

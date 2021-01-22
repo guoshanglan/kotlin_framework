@@ -23,12 +23,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(':commonlibrary')
     implementation project(':commonnetwork')
+    implementation project(':basemodule')
+    //是否开启组件化模式
+    if (!isModule.toBoolean()) {
+        implementation project(':homemodule')//主页
+    }
 
 
 }

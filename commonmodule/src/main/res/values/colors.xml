@@ -4,7 +4,11 @@
     <color name="white">@color/color_ffffff</color>
     <color name="black">@color/color_000000</color>
 
+    <!--间隔线-->
+    <color name="color_line">@color/color_eaeff2</color>
+
     <color name="color_ffffff">#ffffff</color>
     <color name="color_000000">#000000</color>
+    <color name="color_eaeff2">#eaeffe</color>
 
 </resources>

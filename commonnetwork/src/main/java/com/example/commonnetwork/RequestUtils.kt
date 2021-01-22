@@ -1,6 +1,7 @@
 package com.example.commonnetwork
 
 import android.annotation.SuppressLint
+import android.os.Environment
 import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -11,19 +12,17 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import org.json.JSONObject
-import java.io.File
+import java.io.*
 
 
 //网络请求公共类
 class RequestUtils {
     companion object {
-        protected var mToast: Toast? = null
-
 
         /**
          * Get 请求
@@ -247,6 +246,86 @@ class RequestUtils {
                         observer.onSuccess(t)
                     }
                 })
+        }
+
+
+
+        /**
+         * 下载文件
+         *
+         * @param files
+         */
+        //下载文件,url  接口地址   filename:文件名称   observer：回调
+        open fun DownLoad(
+            url: String?,
+            filename: String?,
+            observer: MyObserver<File?>
+        ): Unit {
+            RetrofitUtils.getApiUrl()!!.download(url)!!.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(object : Observer<ResponseBody> {
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+                    override fun onNext(baseResponse: ResponseBody) {
+                        observer.onSuccess(saveFile(filename, baseResponse))
+                    }
+
+                    override fun onError(e: Throwable) {
+                        observer.onFailure(e, e.toString())
+                    }
+
+                    override fun onComplete() {}
+                })
+        }
+
+
+        //保存文件
+        fun saveFile(fileName: String?, body: ResponseBody): File? {
+            var inputStream: InputStream? = null
+            var outputStream: OutputStream? = null
+            var file: File? = null
+            try {
+                if (fileName == null) {
+                    return null
+                }
+                file = File(Environment.getExternalStorageDirectory().getPath(), fileName)
+                if (file == null || !file.exists()) {
+                    file!!.createNewFile()
+                }
+                val fileSize = body.contentLength()
+                var fileSizeDownloaded: Long = 0
+                val fileReader = ByteArray(4096)
+                inputStream = body.byteStream()
+                outputStream = FileOutputStream(file)
+                while (true) {
+                    val read: Int = inputStream.read(fileReader)
+                    if (read == -1) {
+                        break
+                    }
+                    outputStream.write(fileReader, 0, read)
+                    fileSizeDownloaded += read.toLong()
+                }
+                outputStream.flush()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+                if (outputStream != null) {
+                    try {
+                        outputStream.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+            return file
         }
 
 

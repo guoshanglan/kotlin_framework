@@ -32,7 +32,6 @@ abstract class BaseActivity<B : ViewDataBinding, VM : SuperViewModel<IBaseView>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId())
         performDataBinding()
         if (setStatusBar()){
             initStatusBar()
@@ -54,9 +53,18 @@ abstract class BaseActivity<B : ViewDataBinding, VM : SuperViewModel<IBaseView>>
     }
 
 
+    fun initStatusBar(isDarkFont: Boolean) {
+        ImmersionBar.with(this)
+            .statusBarDarkFont(isDarkFont)
+            .navigationBarColor(R.color.white)
+            .init();
+    }
+
+
+
     private fun performDataBinding() {
         //viewDataBinding关联生命周期
-
+        mViewDataBinding = DataBindingUtil.setContentView(this, getLayoutId())
         mViewDataBinding.lifecycleOwner = this
 
         //获取ViewModel
@@ -70,6 +78,26 @@ abstract class BaseActivity<B : ViewDataBinding, VM : SuperViewModel<IBaseView>>
         if (getBindingVariable() > 0) {
             mViewDataBinding.setVariable(getBindingVariable(), mViewModel)
         }
+    }
+
+    override fun showContent() {
+
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun onRefreshEmpty() {
+
+    }
+
+    override fun onRefreshFailure(message: String?) {
+
+    }
+
+    override fun onRefreshNoNetwork() {
+
     }
 
 

@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/commonlibrary" />
             <option value="$PROJECT_DIR$/commonmodule" />
             <option value="$PROJECT_DIR$/commonnetwork" />
+            <option value="$PROJECT_DIR$/homemodule" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
