@@ -2,7 +2,7 @@ package com.example.commonnetwork
 
 import android.annotation.SuppressLint
 import android.os.Environment
-import android.widget.Toast
+import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -33,20 +33,21 @@ class RequestUtils {
          */
 
         @SuppressLint("CheckResult")
-         fun get(lifecycleOwner: LifecycleOwner, url: String?, params: Map<String?, Any?>?, observer: MyObserver<BaseResponse<*>?>) {
+         fun get(lifecycleOwner: LifecycleOwner, url: String?, params: HashMap<String, Any>, observer: BaseObserver<*>) {
             RetrofitUtils.getApiUrl()
                 ?.getUser(url, params)!!.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(object : Observer<BaseResponse<*>> {
+                ?.subscribe(object : Observer<BaseResponse<Any>> {
                     override fun onComplete() {
 
                     }
 
                     override fun onSubscribe(d: Disposable) {
-                        canCenRequest(lifecycleOwner, d)
+                      //  canCenRequest(lifecycleOwner, d)
                     }
 
-                    override fun onNext(t: BaseResponse<*>) {
-                        observer.onSuccess(t)
+                    override fun onNext(t: BaseResponse<Any>) {
+                        Log.e("shuju",t.toString());
+
                     }
 
                     override fun onError(e: Throwable) {

@@ -59,17 +59,16 @@ class RetrofitUtils {
                 .connectTimeout(Url.DEFAULT_TIME, TimeUnit.SECONDS) //设置请求超时时间
                 .writeTimeout(Url.DEFAULT_TIME, TimeUnit.SECONDS) //设置写入超时时间
                 .retryOnConnectionFailure(true) //设置出现错误进行重新连接。
-            if (BuildConfig.DEBUG) {
-                //打印网络请求日志
-                val httpLoggingInterceptor = LoggingInterceptor.Builder()
-                    .loggable(BuildConfig.DEBUG)
-                    .setLevel(Level.BASIC)
-                    .log(INFO)
-                    .request("请求")
-                    .response("响应")
-                    .build()
-                httpClientBuilder.addInterceptor(httpLoggingInterceptor)
-            }
+//                //打印网络请求日志
+//                val httpLoggingInterceptor = LoggingInterceptor.Builder()
+//                    .loggable(BuildConfig.DEBUG)
+//                    .setLevel(Level.BASIC)
+//                    .log(INFO)
+//                    .request("请求")
+//                    .response("响应")
+//                    .build()
+                httpClientBuilder.addInterceptor(LogInterceptor())
+
 
             return httpClientBuilder.build()
 

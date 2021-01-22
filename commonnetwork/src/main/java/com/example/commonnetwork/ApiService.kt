@@ -6,6 +6,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
+import retrofit2.http.Url
 
 
 /**
@@ -17,8 +18,9 @@ interface ApiService {
     /**
      * get 请求
      */
-    open fun getUser(@Url url: String?, @QueryMap info: Map<String?, Any?>?): Observable<BaseResponse<*>>? //简洁方式   直接获取所需数据
-
+     @GET
+     @JvmSuppressWildcards
+     fun getUser(@Url url: String?, @QueryMap info: Map<String, Any> ): Observable<BaseResponse<Any>>? //简洁方式   直接获取所需数据
 
     /**
      * TODO POST请求
