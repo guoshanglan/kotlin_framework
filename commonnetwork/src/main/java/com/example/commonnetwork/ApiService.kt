@@ -29,19 +29,22 @@ interface ApiService {
      * @params headsMap  请求所需要的特殊请求头map<key></key>,value>集合，如果有特殊的header，没有的话请传控map就可以
      */
     @POST
-    fun postUser(@Url url: String?, @Body body: RequestBody?, @HeaderMap headsMap: Map<String?, String?>?): Observable<BaseResponse<*>>?
+    @JvmSuppressWildcards
+    fun postUser(@Url url: String?, @Body body: RequestBody?, @HeaderMap headsMap: Map<String?, String?>?): Observable<BaseResponse<Any>>?
 
     /**
      * TODO DELETE
      */
     @DELETE
-    fun delete(@Url url: String?, @Body body: RequestBody?, @HeaderMap headsMap: Map<String?, String?>?): Observable<BaseResponse<*>>?
+    @JvmSuppressWildcards
+    fun delete(@Url url: String?, @Body body: RequestBody?, @HeaderMap headsMap: Map<String?, String?>?): Observable<BaseResponse<Any>>?
 
     /**
      * TODO PUT
      */
     @PUT
-    fun put(@Url url: String?, @Body body: RequestBody?, @HeaderMap headsMap: Map<String?, String?>?): Observable<BaseResponse<*>>?
+    @JvmSuppressWildcards
+    fun put(@Url url: String?, @Body body: RequestBody?, @HeaderMap headsMap: Map<String?, String?>?): Observable<BaseResponse<Any>>?
 
 
     /**
@@ -49,10 +52,11 @@ interface ApiService {
      */
     @Multipart
     @POST
+    @JvmSuppressWildcards
     fun uploadImages(
         @Url url: String?,
         @Part files: List<MultipartBody.Part?>?
-    ): Observable<BaseResponse<*>>?
+    ): Observable<BaseResponse<Any>>?
 
     /**
      *
@@ -61,6 +65,7 @@ interface ApiService {
      */
     @Streaming
     @GET
+    @JvmSuppressWildcards
     fun download(@Url url: String?): Observable<ResponseBody>?
 
 

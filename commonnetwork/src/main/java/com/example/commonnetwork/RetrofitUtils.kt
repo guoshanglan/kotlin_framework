@@ -3,8 +3,6 @@ package com.example.commonnetwork
 import android.util.Log.INFO
 import androidx.annotation.NonNull
 import androidx.multidex.BuildConfig
-import com.ihsanbal.logging.Level
-import com.ihsanbal.logging.LoggingInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -59,14 +57,6 @@ class RetrofitUtils {
                 .connectTimeout(Url.DEFAULT_TIME, TimeUnit.SECONDS) //设置请求超时时间
                 .writeTimeout(Url.DEFAULT_TIME, TimeUnit.SECONDS) //设置写入超时时间
                 .retryOnConnectionFailure(true) //设置出现错误进行重新连接。
-//                //打印网络请求日志
-//                val httpLoggingInterceptor = LoggingInterceptor.Builder()
-//                    .loggable(BuildConfig.DEBUG)
-//                    .setLevel(Level.BASIC)
-//                    .log(INFO)
-//                    .request("请求")
-//                    .response("响应")
-//                    .build()
                 httpClientBuilder.addInterceptor(LogInterceptor())
 
 

@@ -25,7 +25,7 @@ class HomeMainActivity : BaseActivity<HomemoduleHomemainActivityBinding, NoViewM
         listFragment.add(Fragment1())
         listFragment.add(Fragment1())
 
-        mViewDataBinding.viewPager.offscreenPageLimit = 4
+        mViewDataBinding.viewPager.offscreenPageLimit = 1
 
         mViewDataBinding.viewPager.isUserInputEnabled = false
         mViewDataBinding.viewPager.adapter =

@@ -1,12 +1,14 @@
 package com.example.commonnetwork
 
 import android.util.Log
+import com.orhanobut.logger.Logger.json
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody
 import java.lang.String
 import java.util.*
+import java.util.logging.Logger
 
 class LogInterceptor:Interceptor {
     private val TAG = "okhttp"
@@ -25,9 +27,11 @@ class LogInterceptor:Interceptor {
         )
         val mediaType = response.body!!.contentType()
         val content = response.body!!.string()
-        Log.e("response","----------------------------------------------------------")
-        Log.e(TAG, "response body:$content")
-        Log.e("response","----------------------------------------------------------")
+//        Log.e("response","----------------------------------------------------------")
+//        Log.e(TAG, "response body:$content")
+//        Log.e("response","----------------------------------------------------------")
+
+      com.orhanobut.logger.Logger.json(content)
         return response.newBuilder()
             .body(ResponseBody.create(mediaType, content))
             .build()

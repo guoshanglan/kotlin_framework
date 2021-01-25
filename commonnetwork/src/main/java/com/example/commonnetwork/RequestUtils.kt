@@ -18,6 +18,7 @@ import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import java.io.*
+import java.util.logging.Logger
 
 
 //网络请求公共类
@@ -33,20 +34,29 @@ class RequestUtils {
          */
 
         @SuppressLint("CheckResult")
-         fun get(lifecycleOwner: LifecycleOwner, url: String?, params: HashMap<String, Any>, observer: BaseObserver<*>) {
+        fun get(
+            lifecycleOwner: LifecycleOwner,
+            url: String?,
+            params: HashMap<String, Any>,
+            observer: BaseObserver<Any>
+
+        ) {
+            com.orhanobut.logger.Logger.v("request---body:",Gson().toJson(params))
             RetrofitUtils.getApiUrl()
-                ?.getUser(url, params)!!.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
+                ?.getUser(url, params)!!.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : Observer<BaseResponse<Any>> {
                     override fun onComplete() {
 
                     }
 
                     override fun onSubscribe(d: Disposable) {
-                      //  canCenRequest(lifecycleOwner, d)
+                          canCenRequest(lifecycleOwner, d)
                     }
 
                     override fun onNext(t: BaseResponse<Any>) {
-                        Log.e("shuju",t.toString());
+
+                        observer.onSuccess(Gson().toJson(t.data))
 
                     }
 
@@ -56,9 +66,6 @@ class RequestUtils {
 
                 })
         }
-
-
-
 
 
         /**
@@ -70,11 +77,17 @@ class RequestUtils {
          */
 
         @SuppressLint("CheckResult")
-        public fun post(lifecycleOwner: LifecycleOwner, url: String?, params: Map<String?, Any?>?, observer: MyObserver<BaseResponse<*>?>){
+        public fun post(
+            lifecycleOwner: LifecycleOwner,
+            url: String?,
+            params: Map<String?, Any?>?,
+            observer: BaseObserver<Any>
+        ) {
 
             RetrofitUtils.getApiUrl()
-                ?.postUser(url, convertMapToBody(params),HashMap())!!.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(object : Observer<BaseResponse<*>> {
+                ?.postUser(url, convertMapToBody(params), HashMap())!!.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : Observer<BaseResponse<Any>> {
                     override fun onComplete() {
 
                     }
@@ -83,8 +96,8 @@ class RequestUtils {
                         canCenRequest(lifecycleOwner, d)
                     }
 
-                    override fun onNext(t: BaseResponse<*>) {
-                        observer.onSuccess(t)
+                    override fun onNext(t: BaseResponse<Any>) {
+                        observer.onSuccess(Gson().toJson(t.data))
                     }
 
                     override fun onError(e: Throwable) {
@@ -94,7 +107,6 @@ class RequestUtils {
                 })
 
         }
-
 
 
         /**
@@ -106,11 +118,17 @@ class RequestUtils {
          */
 
         @SuppressLint("CheckResult")
-        public fun postList(lifecycleOwner: LifecycleOwner, url: String?, list:List<Any?>, observer: MyObserver<BaseResponse<*>?>){
+        public fun postList(
+            lifecycleOwner: LifecycleOwner,
+            url: String?,
+            list: List<Any?>,
+            observer: BaseObserver<Any>
+        ) {
 
             RetrofitUtils.getApiUrl()
-                ?.postUser(url, convertListToBody(list),HashMap())!!.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(object : Observer<BaseResponse<*>> {
+                ?.postUser(url, convertListToBody(list), HashMap())!!.subscribeOn(Schedulers.io())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : Observer<BaseResponse<Any>> {
                     override fun onComplete() {
 
                     }
@@ -119,8 +137,8 @@ class RequestUtils {
                         canCenRequest(lifecycleOwner, d)
                     }
 
-                    override fun onNext(t: BaseResponse<*>) {
-                        observer.onSuccess(t)
+                    override fun onNext(t: BaseResponse<Any>) {
+                        observer.onSuccess(Gson().toJson(t.data))
                     }
 
                     override fun onError(e: Throwable) {
@@ -130,8 +148,6 @@ class RequestUtils {
                 })
 
         }
-
-
 
 
         /**
@@ -139,10 +155,16 @@ class RequestUtils {
          */
 
         @SuppressLint("CheckResult")
-        fun delete(lifecycleOwner: LifecycleOwner, url:String?, params: Map<String?, Any?>?, observer: MyObserver<BaseResponse<*>?>){
+        fun delete(
+            lifecycleOwner: LifecycleOwner,
+            url: String?,
+            params: Map<String?, Any?>?,
+            observer: BaseObserver<Any>
+        ) {
 
-            RetrofitUtils.getApiUrl()?.delete(url, convertMapToBody(params),HashMap())?.subscribeOn(Schedulers.io())?.subscribeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(object : Observer<BaseResponse<*>> {
+            RetrofitUtils.getApiUrl()?.delete(url, convertMapToBody(params), HashMap())
+                ?.subscribeOn(Schedulers.io())?.subscribeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : Observer<BaseResponse<Any>> {
                     override fun onComplete() {
 
                     }
@@ -151,8 +173,8 @@ class RequestUtils {
                         canCenRequest(lifecycleOwner, d)
                     }
 
-                    override fun onNext(t: BaseResponse<*>) {
-                        observer.onSuccess(t)
+                    override fun onNext(t: BaseResponse<Any>) {
+                        observer.onSuccess(Gson().toJson(t.data))
                     }
 
                     override fun onError(e: Throwable) {
@@ -176,11 +198,12 @@ class RequestUtils {
             url: String?,
             params: Map<String?, Any?>?,
             headsMap: Map<String?, String?>?,
-            observer: MyObserver<BaseResponse<*>?>
+            observer: BaseObserver<Any>
         ) {
 
-            RetrofitUtils.getApiUrl()?.put(url, convertMapToBody(params),HashMap())?.subscribeOn(Schedulers.io())?.subscribeOn(AndroidSchedulers.mainThread())
-                ?.subscribe(object : Observer<BaseResponse<*>> {
+            RetrofitUtils.getApiUrl()?.put(url, convertMapToBody(params), HashMap())
+                ?.subscribeOn(Schedulers.io())?.subscribeOn(AndroidSchedulers.mainThread())
+                ?.subscribe(object : Observer<BaseResponse<Any>> {
                     override fun onComplete() {
 
                     }
@@ -189,8 +212,8 @@ class RequestUtils {
                         canCenRequest(lifecycleOwner, d)
                     }
 
-                    override fun onNext(t: BaseResponse<*>) {
-                        observer.onSuccess(t)
+                    override fun onNext(t: BaseResponse<Any>) {
+                        observer.onSuccess(Gson().toJson(t.data))
                     }
 
                     override fun onError(e: Throwable) {
@@ -222,7 +245,7 @@ class RequestUtils {
             for (i in files.indices) {
                 val file: File = files[i]
                 val photoRequestBody: RequestBody =
-                   RequestBody. create("multipart/form-data".toMediaTypeOrNull(), file)
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
                 builder.addFormDataPart(Filekey!!, file.getName(), photoRequestBody)
             }
             val parts: List<MultipartBody.Part?> = builder.build().parts
@@ -231,7 +254,7 @@ class RequestUtils {
                 ?.subscribe(object : Observer<BaseResponse<*>?> {
                     override fun onSubscribe(d: Disposable) {
 
-                        canCenRequest(lifecycleOwner,d)
+                        canCenRequest(lifecycleOwner, d)
 
                     }
 
@@ -243,12 +266,12 @@ class RequestUtils {
                     override fun onComplete() {
 
                     }
+
                     override fun onNext(t: BaseResponse<*>) {
                         observer.onSuccess(t)
                     }
                 })
         }
-
 
 
         /**
@@ -268,6 +291,7 @@ class RequestUtils {
                     override fun onSubscribe(d: Disposable) {
 
                     }
+
                     override fun onNext(baseResponse: ResponseBody) {
                         observer.onSuccess(saveFile(filename, baseResponse))
                     }
@@ -337,11 +361,19 @@ class RequestUtils {
          * @return
          */
         fun convertMapToBody(map: Map<*, *>?): RequestBody? {
-            return RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), Gson().toJson(map))
+            com.orhanobut.logger.Logger.v(Gson().toJson(map))
+            return RequestBody.create(
+                "application/json; charset=utf-8".toMediaTypeOrNull(),
+                Gson().toJson(map)
+            )
         }
 
         fun convertListToBody(list: List<Any?>?): RequestBody? {
-            return RequestBody.create("application/json; charset=utf-8".toMediaTypeOrNull(), Gson().toJson(list))
+            com.orhanobut.logger.Logger.v(Gson().toJson(list))
+            return RequestBody.create(
+                "application/json; charset=utf-8".toMediaTypeOrNull(),
+                Gson().toJson(list)
+            )
         }
 
 
@@ -359,18 +391,17 @@ class RequestUtils {
         }
 
 
-
         //监控生命周期取消订阅
         public fun canCenRequest(
             lifecycleOwner: LifecycleOwner,
             disposable: Disposable?
-        ){
+        ) {
             var lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY
             //监控页面的生命周期
             lifecycleOwner.lifecycle.addObserver(object : LifecycleEventObserver {
                 override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
                     if (lifeEvent == event) {
-                        if (disposable!=null&&disposable!!.isDisposed){  //取消订阅
+                        if (disposable != null && disposable!!.isDisposed) {  //取消订阅
                             disposable!!.dispose();
                         }
                         lifecycleOwner.lifecycle.removeObserver(this)
@@ -378,8 +409,6 @@ class RequestUtils {
                 }
             })
         }
-
-
 
 
     }

@@ -12,6 +12,7 @@ class BaseResponse<T>(
 
 ) {
 
-
-
+    override fun toString(): String {
+        return "BaseResponse(code='$code', msg='$msg', success=$success, data=$data)"
+    }
 }
