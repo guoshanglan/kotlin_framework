@@ -3,6 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def releaseTime() {
+    return new Date().format("yyyy_MM_dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
@@ -22,6 +26,17 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+
+        applicationVariants.all { variant ->
+            variant.outputs.all { output ->
+                def fileName = "${defaultConfig.applicationId}_${variant.versionCode}_${releaseTime()}_${buildType.name}.apk"
+                outputFileName = fileName
+
+
+            }
+        }
+
     }
 
     dataBinding {

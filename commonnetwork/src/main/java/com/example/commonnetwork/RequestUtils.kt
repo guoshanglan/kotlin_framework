@@ -55,8 +55,12 @@ class RequestUtils {
                     }
 
                     override fun onNext(t: BaseResponse<Any>) {
+                        if (t.code === "200") {
+                            observer.onSuccess(Gson().toJson(t.data))
+                        } else {
+                            observer.onFailure(null, t.msg)
+                        }
 
-                        observer.onSuccess(Gson().toJson(t.data))
 
                     }
 
@@ -97,7 +101,11 @@ class RequestUtils {
                     }
 
                     override fun onNext(t: BaseResponse<Any>) {
-                        observer.onSuccess(Gson().toJson(t.data))
+                        if (t.code === "200") {
+                            observer.onSuccess(Gson().toJson(t.data))
+                        } else {
+                            observer.onFailure(null, t.msg)
+                        }
                     }
 
                     override fun onError(e: Throwable) {
@@ -138,7 +146,11 @@ class RequestUtils {
                     }
 
                     override fun onNext(t: BaseResponse<Any>) {
-                        observer.onSuccess(Gson().toJson(t.data))
+                        if (t.code === "200") {
+                            observer.onSuccess(Gson().toJson(t.data))
+                        } else {
+                            observer.onFailure(null, t.msg)
+                        }
                     }
 
                     override fun onError(e: Throwable) {
@@ -174,7 +186,11 @@ class RequestUtils {
                     }
 
                     override fun onNext(t: BaseResponse<Any>) {
-                        observer.onSuccess(Gson().toJson(t.data))
+                        if (t.code === "200") {
+                            observer.onSuccess(Gson().toJson(t.data))
+                        } else {
+                            observer.onFailure(null, t.msg)
+                        }
                     }
 
                     override fun onError(e: Throwable) {
@@ -213,7 +229,11 @@ class RequestUtils {
                     }
 
                     override fun onNext(t: BaseResponse<Any>) {
-                        observer.onSuccess(Gson().toJson(t.data))
+                        if (t.code === "200") {
+                            observer.onSuccess(Gson().toJson(t.data))
+                        } else {
+                            observer.onFailure(null, t.msg)
+                        }
                     }
 
                     override fun onError(e: Throwable) {

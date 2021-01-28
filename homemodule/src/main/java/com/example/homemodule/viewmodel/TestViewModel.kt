@@ -14,6 +14,8 @@ class TestViewModel:BaseViewModel() {
     var fragmentName: ObservableField<String> =ObservableField<String>("fragment1")
 
     fun getData(){
+
+
         var params =HashMap<String, Any>();
 
         RequestUtils.get(this,Url.testurl,params,object: BaseObserver<Any>() {

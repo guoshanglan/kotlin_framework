@@ -10,9 +10,13 @@ import com.example.basemodule.viewmodel.NoViewModel
 import com.example.commonmodule.utils.JumpUtils
 import com.example.homemodule.databinding.HomemoduleHomemainActivityBinding
 import com.example.homemodule.fragement.Fragment1
+import io.reactivex.Observer
 
 @Route(path = JumpUtils.ACTIVITY_HOME)
 class HomeMainActivity : BaseActivity<HomemoduleHomemainActivityBinding, NoViewModel>() {
+
+
+
     override fun getLayoutId(): Int {
         return R.layout.homemodule_homemain_activity
     }
@@ -27,7 +31,7 @@ class HomeMainActivity : BaseActivity<HomemoduleHomemainActivityBinding, NoViewM
 
         mViewDataBinding.viewPager.offscreenPageLimit = 1
 
-        mViewDataBinding.viewPager.isUserInputEnabled = false
+        mViewDataBinding.viewPager.isUserInputEnabled = true
         mViewDataBinding.viewPager.adapter =
             ListFragmentAdapter(supportFragmentManager, lifecycle, listFragment)
         mViewDataBinding.viewPager.registerOnPageChangeCallback(object :
