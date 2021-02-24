@@ -20,7 +20,7 @@ interface ApiService {
      */
      @GET
      @JvmSuppressWildcards
-     fun getUser(@Url url: String?, @QueryMap info: Map<String, Any> ): Observable<BaseResponse<Any>>? //简洁方式   直接获取所需数据
+     fun get(@Url url: String?, @QueryMap info: Map<String, Any> ): Observable<BaseResponse<Any>>? //简洁方式   直接获取所需数据
 
     /**
      * TODO POST请求
@@ -30,7 +30,7 @@ interface ApiService {
      */
     @POST
     @JvmSuppressWildcards
-    fun postUser(@Url url: String?, @Body body: RequestBody?, @HeaderMap headsMap: Map<String?, String?>?): Observable<BaseResponse<Any>>?
+    fun post(@Url url: String?, @Body body: RequestBody?, @HeaderMap headsMap: Map<String?, String?>?): Observable<BaseResponse<Any>>?
 
     /**
      * TODO DELETE

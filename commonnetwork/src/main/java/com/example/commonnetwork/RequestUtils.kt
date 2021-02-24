@@ -2,7 +2,6 @@ package com.example.commonnetwork
 
 import android.annotation.SuppressLint
 import android.os.Environment
-import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -18,7 +17,6 @@ import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import java.io.*
-import java.util.logging.Logger
 
 
 //网络请求公共类
@@ -43,7 +41,7 @@ class RequestUtils {
         ) {
             com.orhanobut.logger.Logger.v("request---body:",Gson().toJson(params))
             RetrofitUtils.getApiUrl()
-                ?.getUser(url, params)!!.subscribeOn(Schedulers.io())
+                ?.get(url, params)!!.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : Observer<BaseResponse<Any>> {
                     override fun onComplete() {
@@ -89,7 +87,7 @@ class RequestUtils {
         ) {
 
             RetrofitUtils.getApiUrl()
-                ?.postUser(url, convertMapToBody(params), HashMap())!!.subscribeOn(Schedulers.io())
+                ?.post(url, convertMapToBody(params), HashMap())!!.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : Observer<BaseResponse<Any>> {
                     override fun onComplete() {
@@ -134,7 +132,7 @@ class RequestUtils {
         ) {
 
             RetrofitUtils.getApiUrl()
-                ?.postUser(url, convertListToBody(list), HashMap())!!.subscribeOn(Schedulers.io())
+                ?.post(url, convertListToBody(list), HashMap())!!.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe(object : Observer<BaseResponse<Any>> {
                     override fun onComplete() {
@@ -412,7 +410,7 @@ class RequestUtils {
 
 
         //监控生命周期取消订阅
-        public fun canCenRequest(
+         fun canCenRequest(
             lifecycleOwner: LifecycleOwner,
             disposable: Disposable?
         ) {
